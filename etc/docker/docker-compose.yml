@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+
+  incognito-fullnode-metrics-exporter-api:
+    build:
+      context: ../..
+      dockerfile: web-app/Dockerfile
+      args:
+        buildno: 1
+    image: incognito/incognito-fullnode-metrics-exporter-api:latest
+    volumes:
+      - ../..:/app
+    ports:
+      - 3000:3000
+      - 3001:3001
+    restart: always
+
+  incognito-fullnode-metrics-exporter-processor:
+    build:
+      context: ../..
+      dockerfile: processor/Dockerfile
+      args:
+        buildno: 1
+    image: incognito/incognito-fullnode-metrics-exporter-processor:latest
+    volumes:
+      - ../..:/app
+    restart: always

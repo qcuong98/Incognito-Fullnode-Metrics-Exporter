@@ -1,0 +1,1 @@
+rsync -azP --exclude '.env' --exclude 'logs/' --exclude 'node_modules' --exclude '.git' --exclude 'var/' --exclude '.idea' ./ root@51.79.76.116:/home/coin-service/services/coin-service-metrics-exporter/prod
