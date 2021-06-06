@@ -24,7 +24,8 @@ function registerMetrics() {
   console.log('registerMetrics');
   PromClientComponent.register.registerMetric(PrometheusExporterMetrics.MetricHealth);
   PromClientComponent.register.registerMetric(PrometheusExporterMetrics.MetricBlockchainCounter);
-
+  PromClientComponent.register.registerMetric(PrometheusExporterMetrics.MetricBTCFullnodeBlockCounter)
+  PromClientComponent.register.registerMetric(PrometheusExporterMetrics.MetricBTCFullnodeHealth)
 }
 
 /**
@@ -70,6 +71,32 @@ async function _updateIncognitoFullnodeHealthCheckAPIData() {
     return null;
   });
 
+  externalAPIMetricsPromiseObj.BTC_RPC_GET_BLOCKCHAIN_INFO = axios({
+    url: `${process.env.BTC_FULLNODE_URL}`,
+    method: 'POST',
+    auth: {
+      username: `${process.env.BTC_FULLNODE_USER}`,
+      password: `${process.env.BTC_FULLNODE_PASS}`,
+    },
+    data: {
+      "jsonrpc": "1.0",
+      "method": "getblockchaininfo",
+      "params": {},
+      "id": "curltest",
+    }
+  }).catch(function (err) {
+    logger.error('Error fetching BTC_RPC_GET_BLOCKCHAIN_INFO', err);
+    return null;
+  });
+
+  externalAPIMetricsPromiseObj.BTC_EXTERNAL_API_BEST_BLOCK = axios({
+    url: `${process.env.BLOCKSTREAM_API_URL}/blocks/tip/height`,
+    method: 'get',
+  }).catch(function (err) {
+    //
+    logger.error('Error fetching BTC_EXTERNAL_API_BEST_BLOCK', err);
+    return null;
+  }); 
 
   process.PREFETCH_EXTERNAL_API_DATA = await Promise.props(externalAPIMetricsPromiseObj);
 }
