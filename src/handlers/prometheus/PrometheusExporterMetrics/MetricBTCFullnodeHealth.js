@@ -8,7 +8,7 @@ const Gauge = PromClientComponent.client.Gauge;
 const AlertThreshold = 2
 
 const MetricBTCFullnodeHealth = new Gauge({
-  name: `${constants.PROMETHEUS_METRICS_BTC_PREIFX}health`,
+  name: `${constants.PROMETHEUS_METRICS_BTC_PREFIX}health`,
   help: 'BTC Fullnode health check',
   labelNames: [
     'type',

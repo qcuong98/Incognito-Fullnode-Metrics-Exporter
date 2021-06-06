@@ -7,7 +7,7 @@ const constants = require('../../../config/constants');
 const Gauge = PromClientComponent.client.Gauge;
 
 const MetricBTCFullnodeBlockCounter = new Gauge({
-  name: `${constants.PROMETHEUS_METRICS_BTC_PREIFX}best_blocks`,
+  name: `${constants.PROMETHEUS_METRICS_BTC_PREFIX}best_blocks`,
   help: 'BTC Fullnode block counter',
   labelNames: [
     'type'
